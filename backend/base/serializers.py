@@ -12,10 +12,12 @@ class ProductSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
-        read_only_fields = ('id',)
-        extra_kwargs = {
-            'username': {'read_only': True},
-            'email': {'read_only': True},
-        }
+        # fields = '__all__'
+
+        fields = ['id', 'username', 'email']
+        # read_only_fields = ('id',)
+        # extra_kwargs = {
+        #     'username': {'read_only': True},
+        #     'email': {'read_only': True},
+        # }
 
