@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import { Link, useParams, useLocation} from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 
 import Message from '../components/message'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 
 function CartScreen() {
@@ -25,9 +25,16 @@ function CartScreen() {
         }
     }, [dispatch, productId, qty])
 
+
     const removeFromCartHandler = (id) => {
-        console.log('Removing:', id)
+        dispatch(removeFromCart(id))
     }
+
+    const navigate = useNavigate()
+    const checkoutHandler = () => {
+        navigate(`/login?redirect=shipping`)
+    }
+
 
     return (
         <Row>
@@ -100,6 +107,18 @@ function CartScreen() {
                             </h3>                           
                         </ListGroup.Item>
                     </ListGroup>
+
+                    <ListGroup.Item>
+                        <Button
+                            type="button"
+                            className='btn btn-block'
+                            disabled={cartItems.length === 0}
+                            onClick={checkoutHandler}
+                        >
+                            Proceed to checkout
+                        </Button>
+                    </ListGroup.Item>
+
                 </Card>
             </Col>
         </Row>
