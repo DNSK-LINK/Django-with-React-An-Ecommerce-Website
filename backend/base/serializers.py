@@ -18,24 +18,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['_id', 'username', 'email', 'name', 'isAdmin']
         
 
-    # def get_name(self, obj):
-    #     name = obj.first_name
-    #     if name == '':
-    #         name = obj.email
-
-    #     return name
-
     def get_name(self, obj):
-        if isinstance(obj, User):
-            name = obj.first_name
-            if name == '':
-                name = obj.email
-            return name
-        return None
-
+        name = obj.username
+        if name == '':
+            name = obj.email
+        print (obj)
+        return name
 
     def get__id(self, obj):
         

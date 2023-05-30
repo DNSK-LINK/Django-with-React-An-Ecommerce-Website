@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
 import FormContainer from '../components/formContainer'
-import { Login } from '../actions/userActions'
+import { login } from '../actions/userActions'
 
 function LoginScreen() {
  
@@ -23,7 +23,7 @@ function LoginScreen() {
  
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(Login(email, password))
+        dispatch(login(email, password))
     }
  
     useEffect(() => {
@@ -38,6 +38,8 @@ function LoginScreen() {
     return (
         <FormContainer>
             <h1>Sign In</h1>
+            {error && <Message variant='danger'>{error}</Message>}
+            {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 
                 <Form.Group controlId='email'>
