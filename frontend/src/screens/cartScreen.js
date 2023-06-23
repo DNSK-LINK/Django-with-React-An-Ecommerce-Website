@@ -32,7 +32,7 @@ function CartScreen() {
 
     const navigate = useNavigate()
     const checkoutHandler = () => {
-        navigate(`/login?redirect=shipping`)
+        navigate(`/shipping`)
     }
 
 
