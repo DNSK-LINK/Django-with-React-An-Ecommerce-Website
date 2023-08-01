@@ -10,6 +10,8 @@ from rest_framework import status
 from base.serializers import ProductSerializer, OrderSerializer
 from base.models import Product, Order, OrderItem, ShippingAddress
 
+from datetime import datetime
+
 
                         # Create your views here.
 
@@ -63,6 +65,23 @@ def addOrderItems(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def getMyOrders(request):
+    user = request.user
+    orders = user.order_set.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrders(request):
+    orders = Order.objects.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+ 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getOrderById(request, pk):
 
     user = request.user
@@ -77,3 +96,25 @@ def getOrderById(request, pk):
             Response({'detail':'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
     except:
         return Response({'detail':'Order is mot exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateOrderToPaid(request, pk):
+    order = Order.objects.get(_id=pk)
+
+    order.isPaid = True
+    order.paidAt = datetime.now()
+    order.save()
+    return Response('Order was paid')
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToDeliver(request, pk):
+    order = Order.objects.get(_id=pk)
+
+    order.isDelivered = True
+    order.deliveredAt = datetime.now()
+    order.save()
+    return Response('Order was delivered successfully')

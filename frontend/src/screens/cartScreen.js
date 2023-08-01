@@ -53,7 +53,7 @@ function CartScreen() {
                                         <Image src={item.image} alt={item.name} fluid rounded/>
                                     </Col>
                                     
-                                    <Col md={3}>
+                                    <Col md={3} className='cart-product-name'>
                                         <Link to={`/product/${item.product}`}>{item.name}</Link>
                                     </Col>
 
@@ -98,8 +98,11 @@ function CartScreen() {
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2 className='text-center'>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>
-                            <h3 className='text-center'>
+                            <h2 className='text-center mt-5'>Subtotal</h2>
+                            <h2 className='text-center'>({cartItems.reduce((acc, item) => acc + item.qty, 0)})</h2>
+                            <h2 className='text-center'>items</h2>
+                            
+                            <h3 className='text-center mb-5'>
                                 For&nbsp;&nbsp;
                                 <span className='price-card-span'>
                                     $&nbsp;{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2).toString()}
@@ -111,7 +114,8 @@ function CartScreen() {
                     <ListGroup.Item>
                         <Button
                             type="button"
-                            className='btn btn-block'
+                            // className='btn btn-block'
+                            class='btn-checkout'
                             disabled={cartItems.length === 0}
                             onClick={checkoutHandler}
                         >

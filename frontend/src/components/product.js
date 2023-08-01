@@ -20,14 +20,14 @@ function Product({ product }) {
                 </Card.Title>
             </Link>
 
-            <Card.Text as='div'>
+            <Card.Text as='div' className='card-rating'>
                 <div className='my-3'>
                     {/* {product.rating} from {product.numReviews} reviews */}
                     <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
                 </div>
             </Card.Text>
 
-            <Card.Text as='h3'>
+            <Card.Text as='h3' className='card-price'>
                 ${product.price}
             </Card.Text>
 
